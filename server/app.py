@@ -2,6 +2,11 @@ from flask import Flask, make_response
 from flask_restful import Api, Resource
 from dotenv import load_dotenv
 
+from server.extensions import db, migrate
+from server.models import User, Guest, Episode, Appearance
+from server.controllers.guest_controller import Guests
+from server.controllers.episode_controller import Episodes, EpisodeByID
+
 load_dotenv()
 
 app = Flask(__name__)
@@ -19,6 +24,9 @@ class Home(Resource):
         return {"message": "Hello, World!"}
 
 
+api.add_resource(Home, '/')
+api.add_resource(Episodes, "/episodes")
+api.add_resource(EpisodeByID, "/episodes/<int:id>")
 
 if __name__ == "__main__":
     app.run(debug=True, port=5555)

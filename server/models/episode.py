@@ -15,3 +15,8 @@ class Episode(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"<Episode #{self.number} - {self.date}>"
+
+    def to_dict_with_appearances(self):
+        data = self.to_dict()
+        data["appearances"] = [a.to_dict() for a in self.appearances]
+        return data
