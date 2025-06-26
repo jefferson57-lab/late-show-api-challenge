@@ -16,7 +16,8 @@ class EpisodeByID(Resource):
         if not ep:
             return {"error": "Episode not found"}, 404
         return ep.to_dict_with_appearances(), 200
-
+    
+    @jwt_required()
     def delete(self, id):
         ep = Episode.query.get(id)
         if not ep:
