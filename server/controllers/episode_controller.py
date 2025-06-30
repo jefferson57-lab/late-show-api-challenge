@@ -1,14 +1,14 @@
-from flask_jwt_extended import jwt_required  # <-- Add this line
 from flask_restful import Resource
 from flask import request
 from server.models.episode import Episode
 from server.extensions import db
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 class Episodes(Resource):
     def get(self):
         episodes = Episode.query.all()
-        return [eps.to_dict() for eps in episodes], 200
+        return [e.to_dict() for e in episodes], 200
 
 
 class EpisodeByID(Resource):
@@ -17,7 +17,7 @@ class EpisodeByID(Resource):
         if not ep:
             return {"error": "Episode not found"}, 404
         return ep.to_dict_with_appearances(), 200
-    
+
     @jwt_required()
     def delete(self, id):
         ep = Episode.query.get(id)

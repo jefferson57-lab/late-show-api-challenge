@@ -7,4 +7,4 @@ from server.extensions import db
 class Guests(Resource):
     def get(self):
         guests = Guest.query.all()
-        return [gst.to_dict() for gst in guests], 200
+        return [g.to_dict() for g in guests], 200
